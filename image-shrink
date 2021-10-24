@@ -140,9 +140,9 @@ if [ "${PTTYPE}" = "dos" ]; then
   echo "${ROOTBEG},+" | sfdisk -N2 "${IMGFILE}" &> /dev/null
 else
   sgdisk -Z "${IMGFILE}" &> /dev/null
-  sgdisk -n 1:${BOOTBEG}:${BOOTEND} "${IMGFILE}" > /dev/null
+  sgdisk -n 1:${BOOTBEG}:${BOOTEND} "${IMGFILE}" &> /dev/null
   sgdisk -t 1:0700 "${IMGFILE}" > /dev/null
-  sgdisk -n 2:${ROOTBEG}:0 "${IMGFILE}" > /dev/null
+  sgdisk -n 2:${ROOTBEG}:0 "${IMGFILE}" &> /dev/null
   sgdisk -t 2:8300 "${IMGFILE}" > /dev/null
   sgdisk -u 1:"${PARTUUID_1}" "${IMGFILE}" > /dev/null
   sgdisk -u 2:"${PARTUUID_2}" "${IMGFILE}" > /dev/null

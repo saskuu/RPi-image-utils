@@ -57,7 +57,7 @@ umntimg()
     errexit "Unable to unmount image ROOT partition"
   fi
   rmloop
-  rm -rf "${MNTPATH}/"
+  rm -r "${MNTPATH}/"
   MNTED=FALSE
 }
 

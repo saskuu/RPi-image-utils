@@ -97,7 +97,7 @@ backup()
   mntimg
   sync
   rsync -aDH --partial --numeric-ids --delete --force --exclude "${MNTPATH}" --exclude '/dev' --exclude '/lost+found' --exclude '/media' --exclude '/mnt' \
---exclude '/proc' --exclude '/run' --exclude '/sys' --exclude '/tmp' --exclude '/etc/udev/rules.d/70-persistent-net.rules' \
+--exclude '/proc' --exclude '/run' --exclude '/sys' --exclude '/tmp' --exclude '/var/swap' --exclude '/etc/udev/rules.d/70-persistent-net.rules' \
 --exclude '/var/lib/asterisk/astdb.sqlite3-journal' "${OPTIONS[@]}" / "${MNTPATH}/"
   if [[ $? -ne 0 && $? -ne 24 ]]; then
     errexit "Unable to create backup"
@@ -217,8 +217,8 @@ PTTYPE="$(blkid "${ROOT_DEV}" | sed -n 's|^.*PTTYPE="\(\S\+\)".*|\1|p')"
 if [[ "${PTTYPE}" != "dos" && "${PTTYPE}" != "gpt" ]]; then
   errexit "Unsupported partition table type: ${PTTYPE}"
 fi
-PARTUUID_1="$(blkid "${ROOT_DEV_P}1" | sed -n 's|^.*PARTUUID="\(\S\+\)".*|\1|p')"
-PARTUUID_2="$(blkid "${ROOT_DEV_P}2" | sed -n 's|^.*PARTUUID="\(\S\+\)".*|\1|p')"
+PARTUUID_B="$(blkid "${ROOT_DEV_P}1" | sed -n 's|^.*PARTUUID="\(\S\+\)".*|\1|p')"
+PARTUUID_R="$(blkid "${ROOT_PART}" | sed -n 's|^.*PARTUUID="\(\S\+\)".*|\1|p')"
 PTUUID="$(blkid "${ROOT_DEV}" | sed -n 's|^.*PTUUID="\(\S\+\)".*|\1|p')"
 DFKFREE=$(df | grep "% /$" | awk '{print $3}')
 INISIZE=$(((${DFKFREE} + (${DFKFREE} / 5)) / 1024))
@@ -368,9 +368,9 @@ if [ "${IMGFILE}" = "" ]; then
 EOF
   else
     sgdisk -Z "${IMGFILE}" &> /dev/null
-    sgdisk -n 1:0:+256M "${IMGFILE}" > /dev/null
+    sgdisk -n 1:0:+256M "${IMGFILE}" &> /dev/null
     sgdisk -t 1:0700 "${IMGFILE}" > /dev/null
-    sgdisk -n 2:0:0 "${IMGFILE}" > /dev/null
+    sgdisk -n 2:0:0 "${IMGFILE}" &> /dev/null
     sgdisk -t 2:8300 "${IMGFILE}" > /dev/null
     gdisk "${IMGFILE}" <<EOF > /dev/null
 r
@@ -424,7 +424,11 @@ EOF
     rmloop
     NEWSIZE=$(sed -n 's|^Block count:\s*\(.*\)|\1|p' <<< "${INFO}")
     BLKSIZE=$(sed -n 's|^Block size:\s*\(.*\)|\1|p' <<< "${INFO}")
-    START=$(sfdisk -d ${IMGFILE} | sed -n "s|^${IMGFILE}2\s\+:.*start=\s*\([0-9]\+\).*$|\1|p")
+    IMGFILE_P="${IMGFILE}"
+    if [[ "${IMGFILE_P: -1}" =~ ^[[:digit:]]$ ]]; then
+      IMGFILE_P+='p'
+    fi
+    START=$(sfdisk -d ${IMGFILE} | sed -n "s|^${IMGFILE_P}2\s\+:.*start=\s*\([0-9]\+\).*$|\1|p")
     NEWEND=$((${START} + (${NEWSIZE} * (${BLKSIZE} / 512)) + ((${ADDMB} * ${ONEMB}) / 512) - 1))
     if [ "${PTTYPE}" = "gpt" ]; then
       ((NEWEND += 33))
@@ -442,12 +446,12 @@ w
 EOF
     else
       sgdisk -Z "${IMGFILE}" &> /dev/null
-      sgdisk -n 1:0:+256M "${IMGFILE}" > /dev/null
+      sgdisk -n 1:0:+256M "${IMGFILE}" &> /dev/null
       sgdisk -t 1:0700 "${IMGFILE}" > /dev/null
-      sgdisk -n 2:0:0 "${IMGFILE}" > /dev/null
+      sgdisk -n 2:0:0 "${IMGFILE}" &> /dev/null
       sgdisk -t 2:8300 "${IMGFILE}" > /dev/null
-      sgdisk -u 1:"${PARTUUID_1}" "${IMGFILE}" > /dev/null
-      sgdisk -u 2:"${PARTUUID_2}" "${IMGFILE}" > /dev/null
+      sgdisk -u 1:"${PARTUUID_B}" "${IMGFILE}" > /dev/null
+      sgdisk -u 2:"${PARTUUID_R}" "${IMGFILE}" > /dev/null
       sgdisk -U "${PTUUID}" "${IMGFILE}" > /dev/null
       gdisk "${IMGFILE}" <<EOF > /dev/null
 r

@@ -33,6 +33,13 @@ image-check imagefile [W95|Linux]
 where W95 checks the BOOT partition and Linux checks the ROOT partition.  If neither is specified, Linux is assumed.
 
 
+image-chroot:
+
+image-chroot performs a linux 'chroot' to an image file.  The current user will be 'root' and the current directory will be '/' in the image file.  The host's root filesystem will be available at /host-root-fs.  Use exit or ^D to terminate chroot.  Usage is:
+
+image-chroot [imagefile]
+
+
 image-compare:
 
 image-compare compares a running Raspbian system to an existing standard 'raw' image file and displays the incremental changes that image-backup would perform if run.  Usage is:
@@ -45,7 +52,6 @@ image-info:
 image-info displays information about a standard 'raw' image file.  Usage is:
 
 image-info [imagefile]
-
 
 
 image-mount:
