@@ -88,6 +88,14 @@ for PID in $(pidof -x -o %PPID "${PGMNAME}"); do
     errexit "${PGMNAME} is already running"
   fi
 done
+file --version &> /dev/null
+if [ $? -eq 127 ]; then
+  echo ""
+  echo "Installing file"
+  echo ""
+  apt-get update
+  apt-get install file
+fi
 IMGFILE="$1"
 if [ "${IMGFILE}" = "" ]; then
   errexit "No image file specified"
