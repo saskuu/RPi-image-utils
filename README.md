@@ -108,12 +108,11 @@ $ sudo image-backup /mnt/SynologyNAS/rpi_share/raspberrypi3b/20230212_Pi3B_image
 
 In other words, simply add the URL of the .img file you wish to update to the basic `sudo image-backup` command.
 
-
+---
 
 ## RonR's latest README.txt (with a tiny bit of Markdown added) follows:
 
----------------------------------------------------------------------
-## image-backup:
+### image-backup:
 
 Usage: image-backup [options] [pathto/imagefile for incremental backup]
 -h,--help       This usage description
@@ -140,7 +139,7 @@ image-backup /media/backup.img
 image-backup --initial /media/backup.img,,5000 --noexpand --options --exclude-from=/home/pi/exclude.txt,--delete-excluded
 
 
-## Image-check:
+### Image-check:
 
 Usage: image-check imagefile [W95|Linux]
 
@@ -149,7 +148,7 @@ where W95 checks the BOOT partition and Linux checks the ROOT partition.  If nei
 image-check will check the integrity of a standard 'raw' image file.
 
 
-## image-chroot:
+### image-chroot:
 
 Usage: image-backup [options] pathto/imagefile
 -h,--help       This usage description
@@ -158,7 +157,7 @@ Usage: image-backup [options] pathto/imagefile
 image-chroot performs a linux 'chroot' to an image file.  The current user will be 'root' and the current directory will be '/' in the image file.  The host's root filesystem will be available at /host-root-fs.  Use exit or ^D to terminate chroot.
 
 
-## image-compare:
+### image-compare:
 
 Usage: image-backup [options] pathto/imagefile
 -h,--help       This usage description
@@ -168,7 +167,7 @@ Usage: image-backup [options] pathto/imagefile
 image-compare compares a running Raspbian system to an existing standard 'raw' image file and displays the incremental changes that image-backup would perform if run.
 
 
-## image-info:
+### image-info:
 
 Usage: image-backup [options] pathto/imagefile
 -h,--help       This usage description
@@ -177,7 +176,7 @@ Usage: image-backup [options] pathto/imagefile
 image-info displays information about a standard 'raw' image file.
 
 
-## image-mount:
+### image-mount:
 
 Usage: image-mount imagefile mountpoint [W95|Linux]
 
@@ -186,7 +185,7 @@ where W95 mounts the BOOT partition and Linux mounts the ROOT partition.  If nei
 image-mount mounts a standard 'raw' image file to allow it to be read or written as if it were a device.
 
 
-## image-set-partuuid:
+### image-set-partuuid:
 
 Usage: image-set-partuuid imagefile [ hhhhhhhh-02 | hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh | random ]"
 
@@ -195,7 +194,7 @@ If no partuuid is specified, the current ROOT partuuid will be displayed.
 image-set-partuuid sets the ROOT partition PARTUUID value of a standard 'raw' image file.
 
 
-## image-shrink:
+### image-shrink:
 
 Usage: image-shrink imagefile [Additional MB]
 
