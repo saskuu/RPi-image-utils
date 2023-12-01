@@ -110,7 +110,7 @@ In other words, simply add the URL of the .img file you wish to update to the ba
 
 
 
-## Original README.txt (with a tiny bit of Markdown added) follows:
+## RonR's latest README.txt (with a tiny bit of Markdown added) follows:
 
 ---------------------------------------------------------------------
 ## image-backup:
