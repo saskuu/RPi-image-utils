@@ -76,7 +76,7 @@ Refer to the [Image File Utilities](https://forums.raspberrypi.com/viewtopic.php
 
 #### CREATE:
 
-To create a **new** image backup, use the `sudo image-backup`  command; you will be prompted for inputs. The ones I typically use are shown below immediately following the question mark `?`: 
+To create a ***NEW*** image backup, use the `sudo image-backup`  command; you will be prompted for inputs. The ones I typically use are shown below immediately following the question mark `?`: 
 
 ```bash
 $ sudo image-backup
@@ -99,6 +99,8 @@ To **update** the image file you have created is even easier; `sudo image-backup
 ```bash
 $ sudo image-backup /mnt/SynologyNAS/rpi_share/raspberrypi3b/20230212_Pi3B_imagebackup.img
 ```
+
+In other words, simply add the URL of the .img file you wish to update to the basic `sudo image-backup` command.
 
 
 
