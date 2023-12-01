@@ -20,43 +20,49 @@ The links below will take you to archives of the original post/attachment on the
 
 This repo was created to make a current copy of the RPi `image-utils` toolset available through `git`. There are many resources available online describing the use of `git`, so these instructions are minimal. If you have questions, please consult a tutorial of your own choosing. The instructions below reflect using `bash` from a Raspberry Pi OS terminal or SSH, and assume that `git` is installed: 
 
+### clone the repo
 ```bash
 $ pwd
 /home/pi
-$ mkdir gitrepos					# or use a directory of your own choosing
+$ mkdir gitrepos     # or use a directory of your own choosing
 $ cd gitrepos
 $ git clone https://github.com/seamusdemora/RonR-RPi-image-utils.git
-  # which should yield something like this:
-Cloning into 'RonR-RPi-image-utils'...
-remote: Enumerating objects: 112, done.
-remote: Counting objects: 100% (45/45), done.
-remote: Compressing objects: 100% (28/28), done.
-remote: Total 112 (delta 28), reused 26 (delta 16), pack-reused 67
-Receiving objects: 100% (112/112), 41.92 KiB | 1.45 MiB/s, done.
-Resolving deltas: 100% (64/64), done. 
+```
+#### which should yield something like this:
+>Cloning into 'RonR-RPi-image-utils'...  
+remote: Enumerating objects: 112, done.  
+remote: Counting objects: 100% (45/45), done.  
+remote: Compressing objects: 100% (28/28), done.  
+remote: Total 112 (delta 28), reused 26 (delta 16), pack-reused 67  
+Receiving objects: 100% (112/112), 41.92 KiB | 1.45 MiB/s, done.  
+Resolving deltas: 100% (64/64), done.  
 
-   # take a look around & verify clone operation:
+### take a look around & verify clone operation succeeded:
+```bash
 $ ls -la RonR-RPi-image-utils
-total 76
-drwxr-xr-x 4 pi pi  4096 Feb 13 01:25 .
-drwxr-xr-x 3 pi pi  4096 Feb 13 01:25 ..
-drwxr-xr-x 2 pi pi  4096 Feb 13 01:25 deprecated
-drwxr-xr-x 8 pi pi  4096 Feb 13 01:25 .git
--rw-r--r-- 1 pi pi 13855 Feb 13 01:25 image-backup
--rw-r--r-- 1 pi pi  1534 Feb 13 01:25 image-check
--rw-r--r-- 1 pi pi  3759 Feb 13 01:25 image-chroot
--rw-r--r-- 1 pi pi  3458 Feb 13 01:25 image-compare
--rw-r--r-- 1 pi pi  3152 Feb 13 01:25 image-info
--rw-r--r-- 1 pi pi  1667 Feb 13 01:25 image-mount
--rw-r--r-- 1 pi pi  5639 Feb 13 01:25 image-set-partuuid
--rw-r--r-- 1 pi pi  4150 Feb 13 01:25 image-shrink
--rw-r--r-- 1 pi pi  3478 Feb 13 01:25 README.md
--rw-r--r-- 1 pi pi  4035 Feb 13 01:25 README.txt 
+```
+#### which should yield something like this:
+>total 76  
+drwxr-xr-x 4 pi pi  4096 Feb 13 01:25 .  
+drwxr-xr-x 3 pi pi  4096 Feb 13 01:25 ..  
+drwxr-xr-x 2 pi pi  4096 Feb 13 01:25 deprecated  
+drwxr-xr-x 8 pi pi  4096 Feb 13 01:25 .git  
+-rw-r--r-- 1 pi pi 13855 Feb 13 01:25 image-backup  
+-rw-r--r-- 1 pi pi  1534 Feb 13 01:25 image-check  
+-rw-r--r-- 1 pi pi  3759 Feb 13 01:25 image-chroot  
+-rw-r--r-- 1 pi pi  3458 Feb 13 01:25 image-compare  
+-rw-r--r-- 1 pi pi  3152 Feb 13 01:25 image-info  
+-rw-r--r-- 1 pi pi  1667 Feb 13 01:25 image-mount  
+-rw-r--r-- 1 pi pi  5639 Feb 13 01:25 image-set-partuuid  
+-rw-r--r-- 1 pi pi  4150 Feb 13 01:25 image-shrink  
+-rw-r--r-- 1 pi pi  3478 Feb 13 01:25 README.md  
+-rw-r--r-- 1 pi pi  4035 Feb 13 01:25 README.txt  
 
-   # keep your clone synced to stay current:
+### keep your clone synced to stay current:
+```bash
 $ cd RonR-RPi-image-utils
-$ git config pull.rebase false		# this only needs to be done one time (the first time)
-$ git pull												# all subsequent updates require only this command 
+$ git config pull.rebase false    # this only needs to be done one time (the first time)
+$ git pull                        # all subsequent updates require only this command 
 ```
 
 ## Staging & Usage (Optional) 
@@ -66,7 +72,7 @@ Once you have all of the `inage-utils` files in your local git repository, you m
 ```bash
 $ pwd
 /home/pi/gitrepos/RonR-RPi-image-utils
-$ sudo cp image-* /usr/local/sbin/
+$ sudo cp -uv --preserve=timestamps image-* /usr/local/sbin/
 $ sudo chmod 755 /usr/local/sbin/image-* 
 ```
 
@@ -104,10 +110,105 @@ In other words, simply add the URL of the .img file you wish to update to the ba
 
 
 
-## Original README converted to markdown follows:
+## Original README.txt (with a tiny bit of Markdown added) follows:
 
 ---------------------------------------------------------------------
+## image-backup:
 
+Usage: image-backup [options] [pathto/imagefile for incremental backup]
+-h,--help       This usage description
+-i,--initial    pathto/filename of image file [,inital size MB [,added space for incremental MB]]
+-n,--noexpand   Do not expand filesystem on first run after restore
+-o,--options    Additional rsync options (comma separated)
+-u,--ubuntu     Ubuntu (Deprecated)
+-x,--extract    Extract image from NOOBS (force BOOT partition to -01 / ROOT partition to -02)"
+
+image-backup creates a backup of a running Raspbian system to a standard 'raw' image file that can be written to an SD card or a USB device with Etcher, imageUSB, etc. It will also perform incremental updates to an existing backup image file.
+
+Running image-backup with no incremental backup file parameter will create an initial/full backup. If no -i/--initial option is included, image-backup will interactively prompt for an "Initial image file ROOT filesystem size (MB)", which can be any size as long as (1) it's large enough to hold the data contained on the device being backed up and (2) that amount of space is available on the destination device.  image-backup will also prompt for an "Added space for incremental updates after shrinking (MB)" which will be added to the image file size after the full backup completes and the image file has been shrunk to the smallest size possible.  The resulting image file will auto-expand the first time it's executed unless the -n/--noexpand option is included.
+
+Running image-backup with a parameter of an existing image filename will incrementally update that image file.  The -i/--initial option is ignored on incremental backups.
+
+The -o/--options option permits including additional rsync options (comma separated).
+
+Examples:
+
+image-backup
+
+image-backup /media/backup.img
+
+image-backup --initial /media/backup.img,,5000 --noexpand --options --exclude-from=/home/pi/exclude.txt,--delete-excluded
+
+
+## Image-check:
+
+Usage: image-check imagefile [W95|Linux]
+
+where W95 checks the BOOT partition and Linux checks the ROOT partition.  If neither is specified, Linux is assumed.
+
+image-check will check the integrity of a standard 'raw' image file.
+
+
+## image-chroot:
+
+Usage: image-backup [options] pathto/imagefile
+-h,--help       This usage description
+-u,--ubuntu     Ubuntu (Deprecated)
+
+image-chroot performs a linux 'chroot' to an image file.  The current user will be 'root' and the current directory will be '/' in the image file.  The host's root filesystem will be available at /host-root-fs.  Use exit or ^D to terminate chroot.
+
+
+## image-compare:
+
+Usage: image-backup [options] pathto/imagefile
+-h,--help       This usage description
+-o,--options    Additional rsync options (comma separated)
+-u,--ubuntu     Ubuntu (Deprecated)
+
+image-compare compares a running Raspbian system to an existing standard 'raw' image file and displays the incremental changes that image-backup would perform if run.
+
+
+## image-info:
+
+Usage: image-backup [options] pathto/imagefile
+-h,--help       This usage description
+-u,--ubuntu     Ubuntu (Deprecated)
+
+image-info displays information about a standard 'raw' image file.
+
+
+## image-mount:
+
+Usage: image-mount imagefile mountpoint [W95|Linux]
+
+where W95 mounts the BOOT partition and Linux mounts the ROOT partition.  If neither is specified, Linux is assumed.
+
+image-mount mounts a standard 'raw' image file to allow it to be read or written as if it were a device.
+
+
+## image-set-partuuid:
+
+Usage: image-set-partuuid imagefile [ hhhhhhhh-02 | hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh | random ]"
+
+If no partuuid is specified, the current ROOT partuuid will be displayed.
+
+image-set-partuuid sets the ROOT partition PARTUUID value of a standard 'raw' image file.
+
+
+## image-shrink:
+
+Usage: image-shrink imagefile [Additional MB]
+
+where Additional MB is an optional additional amount of free space to be added.
+
+image-shrink shrinks a standard 'raw' image file to its smallest possible size (plus an optional additional amount of free space).
+
+<!--- 
+You can hide shit in here  :)   LOL 
+
+Following is an older version of README.txt
+--->
+<!---
 ## image-backup:
 
 `image-backup` creates a backup of a running Raspbian system to a standard 'raw' image file that can be written to an SD card or a USB device card with Etcher, imageUSB, etc. It will also perform incremental updates to an existing backup image file.
@@ -156,4 +257,6 @@ where *ptuuid* is 8 hex digits
 
     image-shrink imagefile [Additional MB]
 
-where *Additional MB* is an additional amount of free space to be added.
+where *Additional MB* is an additional amount of free space to be added. 
+
+--->
