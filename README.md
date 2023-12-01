@@ -80,7 +80,7 @@ $ sudo chmod 755 /usr/local/sbin/image-*
 
 Refer to the [Image File Utilities](https://forums.raspberrypi.com/viewtopic.php?t=332000) thread of the Raspberry Pi Forums site for documentation & support. This is offered only as an illustration/example:
 
-#### CREATE:
+### Create the .img backup:
 
 To create a ***NEW*** image backup, use the `sudo image-backup`  command; you will be prompted for inputs. The ones I typically use are shown below immediately following the question mark `?`: 
 
@@ -98,7 +98,7 @@ Create /mnt/SynologyNAS/rpi_share/raspberrypi3b/20230212_Pi3B_imagebackup.img (y
 
 This will take a few minutes depending on your model Pi, the size of your file system & other variables. Upon completion, you should find the image file you specified in your answer to the first question. This image file contains everything exactly as it was in your file system at the time of the backup. This image file may be written to an SD card, or `mount`-ed as another file system on your RPi. 
 
-#### UPDATE:
+### Update an existing .img backup:
 
 To **update** the image file you have created is even easier; `sudo image-backup <IMG_TO_UPDT>`, or:
 
