@@ -20,7 +20,7 @@ The links below will take you to archives of the original post/attachment on the
 
 This repo was created to make a current copy of the RPi `image-utils` toolset available through `git`. There are many resources available online describing the use of `git`, so these instructions are minimal. If you have questions, please consult a tutorial of your own choosing. The instructions below reflect using `bash` from a Raspberry Pi OS terminal or SSH, and assume that `git` is installed: 
 
-### clone the repo
+### 1. clone the repo
 ```bash
 $ pwd
 /home/pi
@@ -37,7 +37,7 @@ remote: Total 112 (delta 28), reused 26 (delta 16), pack-reused 67
 Receiving objects: 100% (112/112), 41.92 KiB | 1.45 MiB/s, done.  
 Resolving deltas: 100% (64/64), done.  
 
-### take a look around & verify clone operation succeeded:
+### 2. take a look around & verify clone operation succeeded:
 ```bash
 $ ls -la RonR-RPi-image-utils
 ```
@@ -58,7 +58,7 @@ drwxr-xr-x 8 pi pi  4096 Feb 13 01:25 .git
 -rw-r--r-- 1 pi pi  3478 Feb 13 01:25 README.md  
 -rw-r--r-- 1 pi pi  4035 Feb 13 01:25 README.txt  
 
-### keep your clone synced to stay current:
+### 3. keep your clone synced to stay current:
 ```bash
 $ cd RonR-RPi-image-utils
 $ git config pull.rebase false    # this only needs to be done one time (the first time)
