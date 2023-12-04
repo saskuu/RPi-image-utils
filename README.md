@@ -4,16 +4,7 @@
 
 Files here are a toolset to create a backup of a running RPi OS to an SD card image file.
 
-The files here are copies of those posted in the [Raspberry Pi Forums](https://www.raspberrypi.org/forums/index.php). The file attachments in this forum don't seem to be persistent, so this repo was created by user scruss (and now maintained by seamus) *in an effort* to ensure a current working copy of *`image-utils`* is always available through `git`.
-
-The links below will take you to archives of the original post/attachment on the [Internet Archive](https://archive.org/). Please note that the original attachment link will get the original `image-util` scripts - which are 2019 vintage:
-
-* article: https://web.archive.org/web/20190824163430/https://www.raspberrypi.org/forums/viewtopic.php?t=247568
-
-* attachment: https://web.archive.org/web/20190824162104/https://www.raspberrypi.org/forums/download/file.php?id=31366&sid=107ba04af18e19ad587c5bcf8ebacd38  
-
-> *NOTE: scruss' original README updated on Feb 12, 2023.* 
-
+The files here are copies of those posted in the Raspberry Pi Forums site. The file attachments in this forum don't seem to be persistent, so this repo was created by user scruss (and now maintained by seamus) *in an effort* to ensure a current working copy of *`image-utils`* is always available through `git`.
 
 
 ## How Do I Use This Repo?
@@ -22,45 +13,49 @@ This repo was created to make a current copy of the RPi `image-utils` toolset av
 
 ### 1. clone the repo
 ```bash
-$ pwd
+$ cd && pwd
 /home/pi
 $ mkdir gitrepos     # or use a directory of your own choosing
 $ cd gitrepos
 $ git clone https://github.com/seamusdemora/RonR-RPi-image-utils.git
 ```
 #### which should yield something like this:
->Cloning into 'RonR-RPi-image-utils'...  
-remote: Enumerating objects: 112, done.  
-remote: Counting objects: 100% (45/45), done.  
-remote: Compressing objects: 100% (28/28), done.  
-remote: Total 112 (delta 28), reused 26 (delta 16), pack-reused 67  
-Receiving objects: 100% (112/112), 41.92 KiB | 1.45 MiB/s, done.  
-Resolving deltas: 100% (64/64), done.  
+```
+Cloning into 'RonR-RPi-image-utils'...  
+remote: Enumerating objects: 147, done.  
+remote: Counting objects: 100% (80/80), done.  
+remote: Compressing objects: 100% (58/58), done.  
+remote: Total 147 (delta 51), reused 35 (delta 21), pack-reused 67  
+Receiving objects: 100% (147/147), 52.04 KiB | 1.73 MiB/s, done.  
+Resolving deltas: 100% (87/87), done.
+```
 
 ### 2. take a look around & verify clone operation succeeded:
 ```bash
-$ ls -la RonR-RPi-image-utils
+$ ls -la ~/gitrepos/RonR-RPi-image-utils
 ```
 #### which should yield something like this:
->total 76  
-drwxr-xr-x 4 pi pi  4096 Feb 13 01:25 .  
-drwxr-xr-x 3 pi pi  4096 Feb 13 01:25 ..  
-drwxr-xr-x 2 pi pi  4096 Feb 13 01:25 deprecated  
-drwxr-xr-x 8 pi pi  4096 Feb 13 01:25 .git  
--rw-r--r-- 1 pi pi 13855 Feb 13 01:25 image-backup  
--rw-r--r-- 1 pi pi  1534 Feb 13 01:25 image-check  
--rw-r--r-- 1 pi pi  3759 Feb 13 01:25 image-chroot  
--rw-r--r-- 1 pi pi  3458 Feb 13 01:25 image-compare  
--rw-r--r-- 1 pi pi  3152 Feb 13 01:25 image-info  
--rw-r--r-- 1 pi pi  1667 Feb 13 01:25 image-mount  
--rw-r--r-- 1 pi pi  5639 Feb 13 01:25 image-set-partuuid  
--rw-r--r-- 1 pi pi  4150 Feb 13 01:25 image-shrink  
--rw-r--r-- 1 pi pi  3478 Feb 13 01:25 README.md  
--rw-r--r-- 1 pi pi  4035 Feb 13 01:25 README.txt  
+```
+total 84  
+drwxrwxr-x 4 pi pi  4096 Dec  3 17:46 .  
+drwxr-xr-x 7 pi pi  4096 Dec  3 17:53 ..  
+drwxrwxr-x 2 pi pi  4096 Dec  3 17:46 deprecated  
+drwxrwxr-x 8 pi pi  4096 Dec  3 17:46 .git  
+-rw-rw-r-- 1 pi pi 14017 Dec  3 17:46 image-backup  
+-rw-rw-r-- 1 pi pi  1534 Dec  3 17:46 image-check  
+-rw-rw-r-- 1 pi pi  3722 Dec  3 17:46 image-chroot  
+-rw-rw-r-- 1 pi pi  3406 Dec  3 17:46 image-compare  
+-rw-rw-r-- 1 pi pi  3115 Dec  3 17:46 image-info  
+-rw-rw-r-- 1 pi pi  1667 Dec  3 17:46 image-mount  
+-rw-rw-r-- 1 pi pi  5719 Dec  3 17:46 image-set-partuuid  
+-rw-rw-r-- 1 pi pi  4150 Dec  3 17:46 image-shrink  
+-rw-rw-r-- 1 pi pi 11832 Dec  3 17:46 README.md  
+-rw-rw-r-- 1 pi pi  4087 Dec  3 17:46 README.txt  
+```
 
 ### 3. keep your clone synced to stay current:
 ```bash
-$ cd RonR-RPi-image-utils
+$ cd ~/gitrepos/RonR-RPi-image-utils
 $ git config pull.rebase false    # this only needs to be done one time (the first time)
 $ git pull                        # all subsequent updates require only this command 
 ```
@@ -70,10 +65,8 @@ $ git pull                        # all subsequent updates require only this com
 Once you have all of the `inage-utils` files in your local git repository, you may find it's worthwhile to keep working copies in your PATH. This makes it easier to use them either directly from the command line, or (for example) in an `cron` job. Here's one way to do this:
 
 ```bash
-$ pwd
-/home/pi/gitrepos/RonR-RPi-image-utils
-$ sudo cp -uv --preserve=timestamps image-* /usr/local/sbin/
-$ sudo chmod 755 /usr/local/sbin/image-* 
+cd
+sudo install --mode=755 ~/gitrepos/RonR-RPi-image-utils/image-* /usr/local/sbin
 ```
 
 ## Creating vs. Updating .img backups (Optional)
@@ -208,6 +201,17 @@ You can hide shit in here  :)   LOL
 Following is an older version of README.txt
 --->
 <!---
+
+The links below will take you to archives of the original post/attachment on the [Internet Archive](https://archive.org/). Please note that the original attachment link will get the original `image-util` scripts - which are 2019 vintage:
+
+* article: https://web.archive.org/web/20190824163430/https://www.raspberrypi.org/forums/viewtopic.php?t=247568
+
+* attachment: https://web.archive.org/web/20190824162104/https://www.raspberrypi.org/forums/download/file.php?id=31366&sid=107ba04af18e19ad587c5bcf8ebacd38  
+
+> *NOTE: scruss' original README updated on Feb 12, 2023.* 
+
+
+
 ## image-backup:
 
 `image-backup` creates a backup of a running Raspbian system to a standard 'raw' image file that can be written to an SD card or a USB device card with Etcher, imageUSB, etc. It will also perform incremental updates to an existing backup image file.
