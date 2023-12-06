@@ -6,6 +6,21 @@ Files here are a toolset to create a backup of a running RPi OS to an SD card im
 
 The files here are copies of those posted in the Raspberry Pi Forums site. The file attachments in this forum don't seem to be persistent, so this repo was created by user scruss (and now maintained by seamus) *in an effort* to ensure a current working copy of *`image-utils`* is always available through `git`.
 
+## An Overview
+
+I've used RonR's `image-utils` for several years now, and I've become a big fan. `Image-utils` creates a complete backup of a Raspberry Pi quickly and efficiently; these backups are rendered in the form of an [*"image file"*](https://en.wikipedia.org/wiki/IMG_(file_format)). The \*.img format is ideal as a backup because it's a _complete_ backup, it's _portable_, and it can be [_loop-mounted_](https://en.wikipedia.org/wiki/Loop_device). In other words: _If your system or SD card becomes corrupted, it can be restored to operation with minimal effort_. This restoration requires 3 "ingredients", and about 5 minutes:
+
+   1. The *.img file - created by routine/scheduled runs of `image-backup` on your system 
+   2. A spare micro SD card 
+   3. [`Etcher`](https://etcher.balena.io/) to write the .img file to the micro-SD card 
+
+The speed and efficiency of `image-backup` are especially noteworthy. Because `image-backup` uses `rsync` for file copying/syncing, a backup requires only the storage space that is actually used by your system. This is **unlike** `dd`: 
+   1. `dd` has no way to tell what portions of your drive/SD card are being used **vs.** what what portions are not used _**because**_ `dd` has no concept of a file. Consequently, a `dd` backup of a 32 GB SD card requires: ...**32GB**!!
+   2. Because of this fundamental limitation, `dd` is *"v-e-r-y   s-l-o-w"*.
+
+By comparison, for my systems (Lite; running headless), a backup of a 32GB SD card requires typically a 3-5GB \*.img file, and 5-10 minutes; that includes the time for network transfer. 
+
+Another efficiency of `image-utils` is its ability to **update** an \*.img file. In other words, instead of creating an entire new \*.img file from scratch, it can **update** an existing \*.img file to incorporate any changes to the filesystems since the last backup. This ability to **update** further reduces the time required for a backup from 5-10 minutes to (potentially) seconds.
 
 ## How Do I Use This Repo?
 
