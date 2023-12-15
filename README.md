@@ -2,7 +2,7 @@
 
 **NB** scruss is *not* the author or maintainer of these files (same goes for seamusdemora, who assumed maintenance of this repo from scruss). Please take up any issues or questions in the [Image File Utilities](https://forums.raspberrypi.com/viewtopic.php?t=332000) thread of the Raspberry Pi Forums site. ***IOW: This is a file repository only; no support is available here.***
 
-Files here are a toolset to create & update a backup of a running RPi OS to a raw image file.  The files here are copies of those posted in the Raspberry Pi Forums site. The file attachments in that forum don't seem to be persistent (*& subject to other annoyances imposed by CloudFlare*). Consequently, this repo was created by user scruss, and now maintained by seamus, *in an effort* to ensure a current working copy of *`image-utils`* is always available through `git`.
+Files here are a toolset to create and update a backup of a running RPi OS to a raw image file. The files are copies of those posted on the Raspberry Pi Forums site. The file attachments in that forum don't seem to be persistent (*and are subject to other annoyances imposed by CloudFlare*). Consequently, this repo was created by user scruss and is now maintained by seamus, *to ensure* a current working copy of *`image-utils`* is always available through `git`.
 
 ## An Overview
 
@@ -12,9 +12,9 @@ I've used RonR's `image-utils` for several years now, and I've become a big fan.
    2. A spare micro SD card (or NVME drive)
    3. [`Etcher`](https://etcher.balena.io/) to write the .img file to the micro-SD card (or NVME drive)
 
-The speed and efficiency of `image-backup` are especially noteworthy. Because `image-backup` uses `rsync` for file copying/syncing, a backup requires only the storage space that is actually used by your system. This is **not the same as `dd`**: 
-   1. `dd` has no way to tell what portions of your drive/SD card are being used **vs.** what what portions are not used _**because**_ `dd` has no concept of a file. Consequently, a `dd` backup of a 32 GB SD card requires: ...**32GB**!!
-   2. Because of this fundamental limitation, `dd` is *"v-e-r-y    s-l-o-w"*.
+The speed and efficiency of `image-backup` are especially noteworthy. Because `image-backup` uses `rsync` for file copying and syncing, a backup requires only the storage space that is actually used by your system. This is **not the same as `dd`**: 
+   1. `dd` has no way to tell which portions of your drive/SD card are being used **versus** which portions are not, **because** `dd` has no concept of a file. Consequently, a `dd` backup of a 32 GB SD card requires: ...**32GB**!!
+   2. Because of this fundamental limitation, `dd` is *"v-e-r-y s-l-o-w"*.
 
 By comparison, for my systems (Lite; running headless), a backup of a 32GB SD card requires typically a 3-5GB \*.img file, and 5-10 minutes; that includes the time for network transfer to a NAS device. 
 
@@ -76,7 +76,7 @@ $ git pull                        # all subsequent updates require only this com
 
 ## Staging & Usage 
 
-Once you've cloned the `inage-utils` files to your local git repo, you'll likely find they are much easier to use by following the very simple **`install`** procedure below. **Assuming that `/usr/local/sbin` is in your PATH**, using this `install` procedure makes the utilities easier to use from the command line, or (for example) in an `cron` job. Here's how to install:
+Once you've cloned the `image-utils` files to your local git repo, you'll likely find they are much easier to use by following the very simple **`install`** procedure below. **Assuming that `/usr/local/sbin` is in your PATH**, using this `install` procedure makes the utilities easier to use from the command line, or (for example) in a `cron` job. Here's how to install:
 
 ```bash
 $ cd
@@ -89,7 +89,7 @@ Refer to the [Image File Utilities](https://forums.raspberrypi.com/viewtopic.php
 
 ### Create the .img backup:
 
-To create a ***NEW*** image backup, use the `sudo image-backup`  command; you will be prompted for inputs. The ones I typically use are shown below - immediately following the question mark `?`: 
+To create a ***NEW*** image backup, use the `sudo image-backup` command; you will be prompted for inputs. The ones I typically use are shown below - immediately following the question mark `?`:
 
 ```
 $ sudo image-backup
