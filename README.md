@@ -8,13 +8,16 @@ Files here are a toolset to create and update a backup of a running RPi OS to a 
 
 I've used RonR's `image-utils` for several years now, and I've become a big fan. `Image-utils` creates a complete backup of a Raspberry Pi quickly and efficiently; these backups are rendered in the form of an [*"image file"*](https://en.wikipedia.org/wiki/IMG_(file_format)). The **\*.img** format is ideal as a backup because it's a _complete_ backup, it's _portable_, and it can be [_loop-mounted_](https://en.wikipedia.org/wiki/Loop_device). In other words: _If your system or SD card or NVME drive becomes corrupted, it can be restored to operation with minimal effort_. This restoration requires 3 "ingredients", and about 5 minutes:
 
-   1. The *.img file - created by routine/scheduled runs of `image-backup` on your system 
-   2. A spare micro SD card (or NVME drive)
-   3. [`Etcher`](https://etcher.balena.io/) to write the .img file to the micro-SD card (or NVME drive)
+   * The *raw image* backup file (`*.img`) file - created by `image-backup` 
+   * A micro SD card (or NVME drive)
+   * [`Etcher`](https://etcher.balena.io/) to write the `.img` file to the micro-SD card (or NVME drive)
 
 The speed and efficiency of `image-backup` are especially noteworthy. Because `image-backup` uses `rsync` for file copying and syncing, a backup requires only the storage space that is actually used by your system. This is **not the same as `dd`**: 
    1. `dd` has no way to tell which portions of your drive/SD card are being used **versus** which portions are not, **because** `dd` has no concept of a file. Consequently, a `dd` backup of a 32 GB SD card requires: ...**32GB**!!
-   2. Because of this fundamental limitation, `dd` is *"v-e-r-y s-l-o-w"*.
+   2. Because of this fundamental limitation, `dd` is *"v-e-r-y&nbsp;&nbsp;&nbsp;s-l-o-w"*, and inefficient of space utilization.
+   3. By comparison, `image-backup` typically requires a small fraction of the time required for a `dd` backup, and the image occupies a small fraction of the space required for a `dd` backup.
+   4. `image-utils` can easily and accurately make a backup wile running on a ***live system***; whereas `dd` will **_always fail_** if used to make a backup of a live system. Using `dd` to make a backup requires the SD card (or NVME) first be un-mounted!
+   5. The raw image file produced by `image-backup` can be used in a number of interesting ways - as described by Hiks Gerganov in [this post on Baeldung](https://www.baeldung.com/linux/img-raw-image-dump-file-management)
 
 By comparison, for my systems (Lite; running headless), a backup of a 32GB SD card requires typically a 3-5GB \*.img file, and 5-10 minutes; that includes the time for network transfer to a NAS device. 
 
