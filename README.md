@@ -1,6 +1,4 @@
-# RonR-RaspberryPi-image-utils
-
-**NB** scruss is *not* the author or maintainer of these files (same goes for seamusdemora, who assumed maintenance of this repo from scruss). Please take up any issues or questions in the [Image File Utilities](https://forums.raspberrypi.com/viewtopic.php?t=332000) thread of the Raspberry Pi Forums site. ***IOW: This is a file repository only; no support is available here.***
+# RaspberryPi-image-utils
 
 Files here are a toolset to create and update a backup of a running RPi OS to a raw image file. The files are copies of those posted on the Raspberry Pi Forums site. The file attachments in that forum don't seem to be persistent (*and are subject to other annoyances imposed by CloudFlare*). Consequently, this repo was created by user scruss and is now maintained by seamus, *to ensure* a current working copy of *`image-utils`* is always available through `git`.
 
